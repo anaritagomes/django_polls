@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% if error_message %}<p>
-    <strong>{{ error_message }}</strong></p>
-{% endif %}
+<h1>{{ question.question_text }}</h1>
 
-<!-- POST form -- modifies data -->
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
 <form action="{% url 'polls:vote' question.id %}" method="post">
-    <!--Cross Site Request Forgeries protection.
-    All POST forms that are targeted at internal URLs should use the {% csrf_token %} template tag-->
     {% csrf_token %}
     {% for choice in question.choice_set.all %}
     <input id="choice{{ forloop.counter }}" name="choice" type="radio" value="{{ choice.id }}">
@@ -20,5 +10,3 @@
     {% endfor %}
     <input type="submit" value="Vote">
 </form>
-</body>
-</html>
